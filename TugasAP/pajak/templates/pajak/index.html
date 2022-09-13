@@ -1,0 +1,99 @@
+<html>
+<head>
+    <title>
+        {{ judul }}
+    </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+        body {
+            background-color: #E9ECEB;
+        }
+        table, th, td {
+            border: 1px solid black; 
+            border-collapse: collapse;
+            padding: .2rem .5rem;
+            font-family: 'Montserrat', sans-serif;
+            height: 50px;
+        }
+        .dataTax{
+            text-align: right;
+        }
+        .exc{
+            color : red;
+            font-family: 'Montserrat', sans-serif;
+        }       
+        .name{
+            color: #006A4E;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .head{
+            font-family: 'Montserrat', sans-serif;
+        }
+        p {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .column {
+            background-color: #006A4E;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .time{
+            background-color: orange;
+            width: 300px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="head">Progressive Tax Calculator</h1>
+    <br>
+    <p>This is a course project for Algorithms and Programming course at Departement of Informatics, Universitas Muhammadiyah Surakarta. </p>
+    <a href="{% url 'side' %}" class="name">About</a>
+    <hr>
+    <form action="" method="post"> {% csrf_token %}
+        <p>Your monthly income (number only, no period "." nor comma "," ) : <input type="text" name="tax">
+        <input type="submit" value="submit">
+
+    </form>
+    {% if exc%}
+        <h2 class="exc">{{exc}}</h2>
+        <br><br>
+        <a href="{% url 'utama' %}" class="name">Refresh this page.</a>
+        <a href="{% url 'side' %}" class="name">About this site.</a>
+    {% endif%}
+
+    {% if resultTax%}
+         <h1 class="head">You just Entered <em><strong>{{rtCur}}</strong></em>. Your detailed tax :</h1>
+         <br>
+         <table class="">
+             <tr class="column">
+                 <th>Taxable Income Bracket</th>
+                 <th>Tax Rate</th>
+                 <th>Your Owed Tax</th>
+             </tr>
+             {% for x in resultTax %}
+                <tr class="dataTax">
+                     {% for data in x %}
+                        <td>{{data}}</td>
+                     {% endfor %}
+                </tr>
+             {% endfor %}
+             <tr>
+                <th colspan="2">Total</th>
+                <th>{{totalTax}}</th>
+            </tr>
+        </table>
+        <br>
+        <a href="{% url 'utama' %}" class="name">Refresh this page.</a>
+        <a href="{% url 'side' %}" class="name">About this site.</a>
+    {% endif%}
+    <hr>
+    <h1 class="head">Kelompok :</h1>
+    <h3 class="name"> Nama : <i>{{ nama }}</i>, NIM : {{ NIM }}</h3>
+    <h3 class="name"> Nama : <i>{{ nama2 }}</i>, NIM : {{ NIM2 }}</h3>
+    <h3 class="name"> Nama : <i>{{ nama3 }}</i>, NIM : {{ NIM3 }}</h3>
+    <h1 class="head">Dosen :</h1>
+    <h3 class="name"> {{ Dosen }} </h3>
+    <p class="time"> {{ waktu }} </p>
+</body>
+</html>
